@@ -20,4 +20,8 @@ export const letterBox = styled.div`
 	font-size: 2rem;
 	text-transform: uppercase;
 	cursor: pointer;
+	transition: cubic-bezier(0.19, 1, 0.22, 1) ,.2s;
+	:hover{
+		border: 2px solid #4cc5e4;
+	}
 `;

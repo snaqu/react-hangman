@@ -5,7 +5,7 @@ export const wordWrapper = styled.div`
 	flex-direction: row;
 	width: 100%;
 	justify-content: center;
-	padding: 70px 0;
+	padding: 70px 0 0 0;
 `;
 
 export const letterBox = styled.div`

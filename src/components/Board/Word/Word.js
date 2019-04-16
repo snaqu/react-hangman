@@ -2,10 +2,10 @@ import React from 'react';
 import * as S from './styles';
 
 const Word = (props) => {
-	const wordToGuess = props.wordToGuess.split('');
+	const wordToGuess = props.wordToGuess;
 	const renderLetters = wordToGuess.map(item => {
 		return (
-			<S.letterBox> {item} </S.letterBox>
+			<S.letterBox key={Math.random()} > {item} </S.letterBox>
 		)
 	})
 
