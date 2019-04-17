@@ -11,7 +11,35 @@ class App extends Component {
 	state = {
 		wordToGuess: [],
 		currentWord: [],
-		lifeScore: 1
+		lifeScore: 1,
+		alphabet: [
+			{ letter: 'a', active: false },
+			{ letter: 'b', active: false },
+			{ letter: 'c', active: false },
+			{ letter: 'd', active: false },
+			{ letter: 'e', active: false },
+			{ letter: 'f', active: false },
+			{ letter: 'g', active: false },
+			{ letter: 'h', active: false },
+			{ letter: 'i', active: false },
+			{ letter: 'j', active: false },
+			{ letter: 'k', active: false },
+			{ letter: 'l', active: false },
+			{ letter: 'm', active: false },
+			{ letter: 'n', active: false },
+			{ letter: 'o', active: false },
+			{ letter: 'p', active: false },
+			{ letter: 'q', active: false },
+			{ letter: 'r', active: false },
+			{ letter: 's', active: false },
+			{ letter: 't', active: false },
+			{ letter: 'u', active: false },
+			{ letter: 'v', active: false },
+			{ letter: 'w', active: false },
+			{ letter: 'x', active: false },
+			{ letter: 'y', active: false },
+			{ letter: 'z', active: false },
+		],
 	}
 
 	componentDidMount() {
@@ -24,37 +52,48 @@ class App extends Component {
 		})
 	}
 
+	changeStatusHandler = (e) => {
+		const alphabet = this.state.alphabet;
+		alphabet.forEach(item => {
+			if (item.letter === e) {
+				item.active = true;
+			}
+		})
+		this.setState((prevState, props) => ({
+			alphabet: alphabet
+		}));
+	}
+
 	addLetterHandler = (e) => {
-
-
 		const wordToGuess = this.state.wordToGuess;
 		const newWord = this.state.currentWord;
 		const indexResult = [];
-		wordToGuess.forEach((item, index) => {
-			return item === e ? indexResult.push(index) : null
-		})
-
+		wordToGuess.forEach((item, index) => item === e ? indexResult.push(index) : null);
 		indexResult.forEach(item => newWord[item] = e);
+
 		this.setState({
-			currentWord: newWord
+			currentWord: newWord,
+		}, () => {
+			if (this.state.wordToGuess.toString() === this.state.currentWord.toString()) {
+				setTimeout(() => {
+					alert('You win! C:');
+					window.location.reload();
+				}, 500)
+			}
 		})
-
-
 
 		if (indexResult.length < 1) {
 			this.setState((prevState, props) => ({
 				lifeScore: prevState.lifeScore + 1
-			}));
+			}), () => {
+				if (this.state.lifeScore >= 7) {
+					setTimeout(() => {
+						alert('You lost! :C');
+						window.location.reload();
+					}, 500);
+				}
+			});
 		}
-
-		if (this.state.lifeScore > 7) {
-			alert('You lost! :C');
-		}
-
-		console.log(newWord);
-		console.log(indexResult);
-		console.log(this.state.lifeScore);
-		console.log(this.state.currentWord);
 	}
 
 	render() {
@@ -63,8 +102,10 @@ class App extends Component {
 				<Header />
 				<Board
 					addLetter={this.addLetterHandler}
+					changeStatus={this.changeStatusHandler}
 					wordToGuess={this.state.currentWord}
 					lifeScore={this.state.lifeScore}
+					alphabet={this.state.alphabet}
 				/>
 			</S.Wrapper>
 		);

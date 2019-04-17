@@ -16,6 +16,8 @@ const Board = (props) => {
 				/>
 				<Letters
 					addLetter={props.addLetter}
+					changeStatus={props.changeStatus}
+					alphabet={props.alphabet}
 				/>
 			</S.Interface>
 		</S.WrapperBoard>

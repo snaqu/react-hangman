@@ -14,7 +14,7 @@ export const letterBox = styled.div`
 	flex-direction: column;
 	width: 50px;
 	height: 50px;
-	border: 2px solid gray;
+	border: ${props => props.active ? '2px solid #4cc5e4' : '2px solid gray'};
 	margin: 10px;
 	text-align: center;
 	font-size: 2rem;
