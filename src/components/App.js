@@ -40,6 +40,7 @@ class App extends Component {
 			{ letter: 'y', active: false },
 			{ letter: 'z', active: false },
 		],
+		points: 0,
 	}
 
 	componentDidMount() {
@@ -50,6 +51,38 @@ class App extends Component {
 				currentWord: Array.from({ length: this.state.wordToGuess.length })
 			})
 		})
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if (prevState.points !== this.state.points) {
+			if (this.state.points < 0) {
+				setTimeout(() => {
+					alert('You lost! :C');
+					window.location.reload();
+				}, 300);
+			} else if (this.state.points >= 100) {
+				setTimeout(() => {
+					alert('You win! C:');
+					window.location.reload();
+				}, 300);
+			} else {
+				const newAlphabet = this.state.alphabet;
+				newAlphabet.forEach(item => {
+					item.active = false;
+				})
+				setTimeout(() => {
+					this.setState({
+						wordToGuess: (wordsToGame[Math.floor(Math.random() * wordsToGame.length)]).split(''),
+						alphabet: newAlphabet,
+						lifeScore: 1
+					}, () => {
+						this.setState({
+							currentWord: Array.from({ length: this.state.wordToGuess.length })
+						})
+					})
+				}, 400);
+			}
+		}
 	}
 
 	changeStatusHandler = (e) => {
@@ -64,42 +97,52 @@ class App extends Component {
 		}));
 	}
 
-	addLetterHandler = (e) => {
-		const wordToGuess = this.state.wordToGuess;
-		const newWord = this.state.currentWord;
-		const indexResult = [];
-		wordToGuess.forEach((item, index) => item === e ? indexResult.push(index) : null);
-		indexResult.forEach(item => newWord[item] = e);
+	addLetterHandler = (e, status) => {
+		if (status !== true) {
+			const wordToGuess = this.state.wordToGuess;
+			const newWord = this.state.currentWord;
+			const indexResult = [];
+			wordToGuess.forEach((item, index) => item === e ? indexResult.push(index) : null);
+			indexResult.forEach(item => newWord[item] = e);
 
-		this.setState({
-			currentWord: newWord,
-		}, () => {
-			if (this.state.wordToGuess.toString() === this.state.currentWord.toString()) {
-				setTimeout(() => {
-					alert('You win! C:');
-					window.location.reload();
-				}, 500)
-			}
-		})
-
-		if (indexResult.length < 1) {
-			this.setState((prevState, props) => ({
-				lifeScore: prevState.lifeScore + 1
-			}), () => {
-				if (this.state.lifeScore >= 7) {
-					setTimeout(() => {
-						alert('You lost! :C');
-						window.location.reload();
-					}, 500);
+			this.setState({
+				currentWord: newWord,
+			}, () => {
+				if (this.state.wordToGuess.toString() === this.state.currentWord.toString()) {
+					this.setState((prevState, props) => ({
+						points: prevState.points + 2
+					}))
+					// setTimeout(() => {
+					// 	alert('You win! C:');
+					// 	window.location.reload();
+					// }, 500)
 				}
-			});
+			})
+
+			if (indexResult.length < 1) {
+				this.setState((prevState, props) => ({
+					lifeScore: prevState.lifeScore + 1
+				}), () => {
+					if (this.state.lifeScore >= 7) {
+						this.setState((prevState, props) => ({
+							points: prevState.points - 1
+						}))
+						// setTimeout(() => {
+						// 	alert('You lost! :C');
+						// 	window.location.reload();
+						// }, 500);
+					}
+				});
+			}
 		}
 	}
 
 	render() {
 		return (
 			<S.Wrapper>
-				<Header />
+				<Header
+					points={this.state.points}
+				/>
 				<Board
 					addLetter={this.addLetterHandler}
 					changeStatus={this.changeStatusHandler}

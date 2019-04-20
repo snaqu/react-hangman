@@ -7,6 +7,9 @@ export const letterWrapper = styled.div`
 	justify-content: center;
 	padding: 70px 0;
 	flex-wrap: wrap;
+	@media (max-width: 1330px) {
+		width: 50%;
+  }
 `;
 
 export const letterBox = styled.div`

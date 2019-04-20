@@ -5,6 +5,9 @@ export const WrapperBoard = styled.div`
 	/* height: 100%; */
 	display: flex;
 	flex-direction: row;
+	@media (max-width: 1330px) {
+		flex-direction: column;
+  }
 `;
 
 export const Interface = styled.div`

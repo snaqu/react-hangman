@@ -6,7 +6,7 @@ const Letters = (props) => {
 	const generateLetters = alphabet.map(item => (
 		<S.letterBox
 			key={item.letter}
-			onClick={() => {props.addLetter(item.letter); props.changeStatus(item.letter);}}
+			onClick={() => {props.addLetter(item.letter, item.active); props.changeStatus(item.letter);}}
 			active={item.active}
 		>{item.letter}</S.letterBox >
 	));

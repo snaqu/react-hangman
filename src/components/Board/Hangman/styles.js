@@ -4,6 +4,10 @@ export const Block = styled.div`
 	display: flex;
 	position: relative;
 	flex: 1;
+	@media (max-width: 1330px) {
+		height: 550px;
+		justify-content: center;
+  }
 `;
 
 export const hangmanEl1 = styled.img`

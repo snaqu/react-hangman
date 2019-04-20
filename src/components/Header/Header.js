@@ -1,12 +1,17 @@
 import React from 'react';
 import * as S from './styles';
+import ScoreBoard from './scoreBoard/scoreBoard';
 
-
-const Header = () => {
+const Header = (props) => {
 	return (
-		<S.Header>
-			Hangman
-		</S.Header>
+		<S.headerContainer>
+			<S.Header>
+				Hangman
+			</S.Header>
+			<ScoreBoard
+				points={props.points}
+			/>
+		</S.headerContainer>
 	);
 }
 
