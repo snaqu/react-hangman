@@ -8,10 +8,14 @@ export const Header = styled.h1`
 	display: flex;
 	justify-content: center;
 	margin-bottom: 0px;
-`;
+	`;
 
 export const headerContainer = styled.div`
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+	height: 150px;
+	@media (max-width: 800px) {
+		height: 190px;
+}
 `;

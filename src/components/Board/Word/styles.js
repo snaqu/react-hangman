@@ -6,6 +6,13 @@ export const wordWrapper = styled.div`
 	width: 100%;
 	justify-content: center;
 	padding: 70px 0 0 0;
+	flex-wrap: wrap;
+	@media (max-width: 800px) {
+		width: 50%;
+  }
+	@media (max-width: 550px) {
+		width: 30%;
+  }
 `;
 
 export const letterBox = styled.div`

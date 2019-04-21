@@ -9,4 +9,7 @@ export const scoreBoard = styled.h2`
 	margin: 0;
 	padding: 0 200px;
 	font-weight: 300;
+	@media (max-width: 800px) {
+		justify-content: center;
+}
 `;

@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import * as S from './styles';
 import Header from './Header/Header';
 import Board from './Board/Board';
-
-// pseudo API
-const wordsToGame = ['shelter', 'rock', 'noxious', 'vigorous', 'alike', 'earthquake', 'advice', 'dirty', 'various', 'watch', 'impolite', 'enchanted'];
-
+import Words from './words';
 
 class App extends Component {
 	state = {
@@ -45,7 +42,7 @@ class App extends Component {
 
 	componentDidMount() {
 		this.setState({
-			wordToGuess: (wordsToGame[Math.floor(Math.random() * wordsToGame.length)]).split('')
+			wordToGuess: (Words[Math.floor(Math.random() * Words.length)]).split('')
 		}, () => {
 			this.setState({
 				currentWord: Array.from({ length: this.state.wordToGuess.length })
@@ -72,7 +69,7 @@ class App extends Component {
 				})
 				setTimeout(() => {
 					this.setState({
-						wordToGuess: (wordsToGame[Math.floor(Math.random() * wordsToGame.length)]).split(''),
+						wordToGuess: (Words[Math.floor(Math.random() * Words.length)]).split(''),
 						alphabet: newAlphabet,
 						lifeScore: 1
 					}, () => {
@@ -87,11 +84,7 @@ class App extends Component {
 
 	changeStatusHandler = (e) => {
 		const alphabet = this.state.alphabet;
-		alphabet.forEach(item => {
-			if (item.letter === e) {
-				item.active = true;
-			}
-		})
+		alphabet.forEach(item => item.letter === e ? item.active = true : null);
 		this.setState((prevState, props) => ({
 			alphabet: alphabet
 		}));
@@ -112,10 +105,6 @@ class App extends Component {
 					this.setState((prevState, props) => ({
 						points: prevState.points + 2
 					}))
-					// setTimeout(() => {
-					// 	alert('You win! C:');
-					// 	window.location.reload();
-					// }, 500)
 				}
 			})
 
@@ -127,10 +116,6 @@ class App extends Component {
 						this.setState((prevState, props) => ({
 							points: prevState.points - 1
 						}))
-						// setTimeout(() => {
-						// 	alert('You lost! :C');
-						// 	window.location.reload();
-						// }, 500);
 					}
 				});
 			}
@@ -138,18 +123,21 @@ class App extends Component {
 	}
 
 	render() {
+		const { alphabet, lifeScore, currentWord, points } = this.state;
 		return (
 			<S.Wrapper>
-				<Header
-					points={this.state.points}
-				/>
-				<Board
-					addLetter={this.addLetterHandler}
-					changeStatus={this.changeStatusHandler}
-					wordToGuess={this.state.currentWord}
-					lifeScore={this.state.lifeScore}
-					alphabet={this.state.alphabet}
-				/>
+				<S.Container>
+					<Header
+						points={points}
+					/>
+					<Board
+						addLetter={this.addLetterHandler}
+						changeStatus={this.changeStatusHandler}
+						wordToGuess={currentWord}
+						lifeScore={lifeScore}
+						alphabet={alphabet}
+					/>
+				</S.Container>
 			</S.Wrapper>
 		);
 	}

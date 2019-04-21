@@ -3,7 +3,7 @@ import * as S from './styles';
 
 const scoreBoard = (props) => {
 	return (
-		<S.scoreBoard>{props.points} points</S.scoreBoard>
+		<S.scoreBoard>Score: {props.points}</S.scoreBoard>
 	);
 }
 
