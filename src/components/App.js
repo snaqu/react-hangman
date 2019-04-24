@@ -83,15 +83,17 @@ class App extends Component {
 	}
 
 	changeStatusHandler = (e) => {
-		const alphabet = this.state.alphabet;
-		alphabet.forEach(item => item.letter === e ? item.active = true : null);
-		this.setState((prevState, props) => ({
-			alphabet: alphabet
-		}));
+		if (this.state.lifeScore < 7) {
+			const alphabet = this.state.alphabet;
+			alphabet.forEach(item => item.letter === e ? item.active = true : null);
+			this.setState((prevState, props) => ({
+				alphabet: alphabet
+			}));
+		}
 	}
 
 	addLetterHandler = (e, status) => {
-		if (status !== true) {
+		if (status !== true && this.state.lifeScore < 7) {
 			const wordToGuess = this.state.wordToGuess;
 			const newWord = this.state.currentWord;
 			const indexResult = [];
@@ -114,8 +116,13 @@ class App extends Component {
 				}), () => {
 					if (this.state.lifeScore >= 7) {
 						this.setState((prevState, props) => ({
-							points: prevState.points - 1
+							currentWord: this.state.wordToGuess
 						}))
+						setTimeout(() => {
+							this.setState((prevState, props) => ({
+								points: prevState.points - 1
+							}))
+						}, 500);
 					}
 				});
 			}
