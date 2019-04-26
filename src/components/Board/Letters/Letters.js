@@ -7,8 +7,7 @@ const Letters = (props) => {
 		<S.letterBox
 			key={item.letter}
 			onClick={() => {props.addLetter(item.letter, item.active); props.changeStatus(item.letter);}}
-			active={item.active}
-		>{item.letter}</S.letterBox >
+			active={item.active}>{item.letter}</S.letterBox >
 	));
 
 	return (
